@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h3>Live Weather Updates</h3>
+
+<div id="output"></div>
+
+<script>
+    // Start streaming automatically for a fixed city (Delhi)
+    const stream = new EventSource("/stream/?city=Delhi");
+
+    stream.onmessage = function(event) {
+        document.getElementById("output").innerText = event.data;
+    };
+</script>
+
+</body>
+</html>
