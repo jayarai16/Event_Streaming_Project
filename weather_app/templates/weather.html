@@ -8,7 +8,7 @@
 
 <script>
     // Start streaming automatically for a fixed city (Delhi)
-    const stream = new EventSource("/stream/?city=Delhi");
+    const stream = new EventSource("/stream/?city=Mumbai");
 
     stream.onmessage = function(event) {
         document.getElementById("output").innerText = event.data;
