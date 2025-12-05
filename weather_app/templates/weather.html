@@ -4,11 +4,11 @@
 
 <h3>Live Weather Updates</h3>
 
-<div id="output"></div>
+<div id="output">Waiting for weather...</div>
 
 <script>
     // Start streaming automatically for a fixed city (Delhi)
-    const stream = new EventSource("/stream/?city=Mumbai");
+    const stream = new EventSource("/weather_stream/?city=Mumbai");
 
     stream.onmessage = function(event) {
         document.getElementById("output").innerText = event.data;
