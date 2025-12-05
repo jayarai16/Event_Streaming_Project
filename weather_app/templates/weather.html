@@ -1,4 +1,89 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Weather Updates</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f4f7;
+        }
+        h2 {
+            color: #003366;
+        }
+        #weather-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+            font-size: 18px;
+        }
+        select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Live Weather Updates</h2>
+
+    <label>Select City: </label>
+    <select id="citySelector">
+        <option value="Mumbai">Mumbai</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Bangalore">Bangalore</option>
+        <option value="Kolkata">Kolkata</option>
+        <option value="Chennai">Chennai</option>
+    </select>
+
+    <div id="weather-box">Waiting for weather data...</div>
+
+    <script>
+        let stream;
+
+        function startStream(city) {
+            // Close previous connection
+            if (stream) {
+                stream.close();
+            }
+
+            // Create new SSE connection
+            stream = new EventSource(`/weather_stream?city=${city}`);
+
+            // Update UI when message arrives
+            stream.onmessage = function(event) {
+                document.getElementById("weather-box").innerText = event.data;
+            };
+
+            // If any error occurs
+            stream.onerror = function() {
+                document.getElementById("weather-box").innerText = 
+                    "Error: Unable to get data. Retrying...";
+            };
+        }
+
+        // Start streaming for default city
+        startStream("Mumbai");
+
+        // Change city event
+        document.getElementById("citySelector").addEventListener("change", function() {
+            const selectedCity = this.value;
+            document.getElementById("weather-box").innerText = "Loading...";
+            startStream(selectedCity);
+        });
+    </script>
+
+</body>
+</html>
+
+{% comment %} <!DOCTYPE html>
 <html>
 <body>
 
@@ -16,4 +101,4 @@
 </script>
 
 </body>
-</html>
+</html> {% endcomment %}

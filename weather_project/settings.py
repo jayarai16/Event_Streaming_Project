@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'weather_app',
+
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "weather_project.wsgi.application"
+# WSGI_APPLICATION = "weather_project.wsgi.application"
+ASGI_APPLICATION = "core.asgi.application"
 
 
 # Database
